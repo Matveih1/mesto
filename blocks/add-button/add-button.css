@@ -1,0 +1,29 @@
+
+.add-button {
+  width: 150px;
+  height: 50px;
+  justify-self: end;
+
+  border: 2px solid #fff;
+  border-radius: 2px;
+
+  background-image: url('../../images/add-button.png');
+  background-repeat: no-repeat;
+  background-position: center;
+
+  background-color: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+@media screen and (max-width: 767px) {
+  .add-button{
+    width: 282px;
+    height: 50px;
+    justify-self: center;
+
+  }
+}

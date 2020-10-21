@@ -1,0 +1,19 @@
+
+.edit-button {
+  grid-area: button;
+  align-self: center;
+
+  border: 1px solid #fff;
+  width: 24px;
+  height: 24px;
+  background-image: url("../../images/edit-button.png");
+  background-repeat: no-repeat;
+  background-position: center;
+
+  background-color: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}

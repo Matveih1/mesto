@@ -1,0 +1,12 @@
+
+.page {
+  max-width: 882px;
+  min-width: 320px;
+  width: 90%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+* {
+  outline: 1px red solid;
+}
