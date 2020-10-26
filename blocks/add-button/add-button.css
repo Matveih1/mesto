@@ -7,7 +7,7 @@
   border: 2px solid #fff;
   border-radius: 2px;
 
-  background-image: url('../../images/add-button.png');
+  background-image: url('../../images/add-button.svg');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -17,6 +17,12 @@
   padding: 0;
   cursor: pointer;
   outline: none;
+
+  transition: opacity .5s linear;
+}
+
+.add-button:hover {
+  opacity: .6;
 }
 
 @media screen and (max-width: 767px) {

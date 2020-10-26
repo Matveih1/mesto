@@ -6,7 +6,7 @@
   border: 1px solid #fff;
   width: 24px;
   height: 24px;
-  background-image: url("../../images/edit-button.png");
+  background-image: url("../../images/edit-button.svg");
   background-repeat: no-repeat;
   background-position: center;
 
@@ -16,4 +16,10 @@
   padding: 0;
   cursor: pointer;
   outline: none;
+
+  transition: opacity .5s linear;
+}
+
+.edit-button:hover {
+  opacity: .6;
 }

@@ -3,6 +3,13 @@
   background-image: url('../../../images/like.svg');
   width: 20px;
   height: 18px;
-  /* background-repeat: no-repeat; */
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  border: none;
+  background-color: transparent;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
 }
