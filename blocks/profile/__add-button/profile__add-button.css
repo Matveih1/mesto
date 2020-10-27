@@ -1,5 +1,5 @@
 
-.add-button {
+.profile__add-button {
   width: 150px;
   height: 50px;
   justify-self: end;
@@ -7,7 +7,7 @@
   border: 2px solid #fff;
   border-radius: 2px;
 
-  background-image: url('../../images/add-button.svg');
+  background-image: url('../../../images/add-button.svg');
   background-repeat: no-repeat;
   background-position: center;
 
@@ -21,12 +21,12 @@
   transition: opacity .5s linear;
 }
 
-.add-button:hover {
+.profile__add-button:hover {
   opacity: .6;
 }
 
 @media screen and (max-width: 767px) {
-  .add-button{
+  .profile__add-button{
     width: 282px;
     height: 50px;
     justify-self: center;
