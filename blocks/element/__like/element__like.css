@@ -14,8 +14,10 @@
   outline: none;
 
   transition: opacity .5s linear;
+  transition: transform 0.3s;
 }
 
 .element__like:hover {
   opacity: .6;
+  transform: scale(1.3);
 }

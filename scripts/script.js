@@ -69,6 +69,11 @@ function addElement (img, title) {
   newElement.querySelector('.element__image').alt = title;
   newElement.querySelector('.element__title').textContent = title;
 
+  // оживим like
+  newElement.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
+
   // отображаем на странице в начало родителя
   elements.prepend(newElement); 
 }
