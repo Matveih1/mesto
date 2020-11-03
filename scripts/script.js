@@ -11,6 +11,56 @@ let descriptionInput = popupForm.querySelector('input[name="description"]');
 // найдем форму
 let formElement = popupForm.querySelector('.popup__container');
 
+const initialCards = [
+  {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+]; 
+
+// добавим элементы из массива
+initialCards.forEach((item) => {
+  addElement(item.link, item.name);
+});
+
+function addElement (img, title) {
+  // получим содержимое template для клонирования
+  const elementTemplate = document.querySelector('#element').content;
+  // найдем родителя в которого будем клонировать
+  const elements = document.querySelector('.elements');
+
+  // клонируем содержимое тега template
+  const newElement = elementTemplate.cloneNode(true);
+
+  // наполняем содержимым
+  newElement.querySelector('.element__image').src = img;
+  newElement.querySelector('.element__image').alt = title;
+  newElement.querySelector('.element__title').textContent = title;
+
+  // отображаем на странице в начало родителя
+  elements.prepend(newElement); 
+}
+
 
 function editButtonClick() {
 
