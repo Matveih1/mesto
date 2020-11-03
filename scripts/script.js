@@ -1,7 +1,7 @@
-let popupForm = document.querySelector('.popup');
+let popupForm = document.querySelector('.popup.popup_profile');
 
 let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__button-close');
+let closeButton = popupForm.querySelector('.popup__button-close');
 
 let infoName = document.querySelector('.profile__info-name');
 let nameInput = popupForm.querySelector('input[name="name"]');
@@ -9,7 +9,19 @@ let infoDescription = document.querySelector('.profile__info-description');
 let descriptionInput = popupForm.querySelector('input[name="description"]');
 
 // найдем форму
-let formElement = popupForm.querySelector('.popup__container');
+let formProfile = popupForm.querySelector('.popup__container');
+
+
+// найдем кнопку для добавления новых элементов
+const addButton = document.querySelector('.profile__add-button');
+// найдем нужный popup
+const popupElement = document.querySelector('.popup.popup_element');
+const formElement = popupElement.querySelector('form[name="form-elements"]');
+const closeButtonElement = popupElement.querySelector('.popup__button-close');
+const titleElement = formElement.querySelector('input[name="title"]');
+const linkElement = formElement.querySelector('input[name="link"]');
+
+
 
 const initialCards = [
   {
@@ -86,7 +98,34 @@ function formSubmitHandler (evt) {
   closeButtonClick();
 }
 
+// Работа с формой добавления элементов
+function addButtonClick () {
+  popupElement.classList.add('popup_open');
+
+  // очистим форму
+  linkElement.value = '';
+  titleElement.value = '';
+}
+
+function closeButtonElementClick () {
+  popupElement.classList.remove('popup_open');
+}
+
+function formElementSubmit (evt) {
+  evt.preventDefault(); // отменим стандартную отправку
+
+  addElement(linkElement.value, titleElement.value);
+
+  closeButtonElementClick();
+}
+
+
+// добавим прослушку событий
 editButton.addEventListener('click', editButtonClick); 
 closeButton.addEventListener('click', closeButtonClick);
+formProfile.addEventListener('submit', formSubmitHandler); 
 
-formElement.addEventListener('submit', formSubmitHandler); 
+addButton.addEventListener('click', addButtonClick);
+closeButtonElement.addEventListener('click', closeButtonElementClick);
+formElement.addEventListener('submit', formElementSubmit);
+
