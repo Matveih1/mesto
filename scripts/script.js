@@ -74,6 +74,11 @@ function addElement (img, title) {
     evt.target.classList.toggle('element__like_active');
   });
 
+  // добавим возможность удалять
+  newElement.querySelector('.element__delete').addEventListener('click', function (evt) {
+    evt.target.closest('.element').remove();
+  });
+
   // отображаем на странице в начало родителя
   elements.prepend(newElement); 
 }
