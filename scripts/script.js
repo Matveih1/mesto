@@ -21,6 +21,10 @@ const closeButtonElement = popupElement.querySelector('.popup__button-close');
 const titleElement = formElement.querySelector('input[name="title"]');
 const linkElement = formElement.querySelector('input[name="link"]');
 
+// image-popup
+const imagePopup = document.querySelector('.image-popup');
+const imagePopupButtonClose = imagePopup.querySelector('.image-popup__button-close');
+
 
 
 const initialCards = [
@@ -79,10 +83,20 @@ function addElement (img, title) {
     evt.target.closest('.element').remove();
   });
 
+  // откроем картинку
+  newElement.querySelector('.element__image').addEventListener('click', function (evt) {
+    imagePopup.querySelector('.image-popup__img').src = evt.target.src;
+    // найдем родителя
+    const elementTitle = evt.target.closest('.element').querySelector('.element__title').textContent;
+    imagePopup.querySelector('.image-popup__caption').textContent = elementTitle;
+    imagePopup.querySelector('.image-popup__img').alt = elementTitle;
+    
+    imagePopup.classList.add('image-popup_open');
+  });
+
   // отображаем на странице в начало родителя
   elements.prepend(newElement); 
 }
-
 
 function editButtonClick() {
 
@@ -130,6 +144,11 @@ function formElementSubmit (evt) {
 }
 
 
+function imagePopupClose() {
+  imagePopup.classList.remove('image-popup_open');
+}
+
+
 // добавим прослушку событий
 editButton.addEventListener('click', editButtonClick); 
 closeButton.addEventListener('click', closeButtonClick);
@@ -138,4 +157,6 @@ formProfile.addEventListener('submit', formSubmitHandler);
 addButton.addEventListener('click', addButtonClick);
 closeButtonElement.addEventListener('click', closeButtonElementClick);
 formElement.addEventListener('submit', formElementSubmit);
+
+imagePopupButtonClose.addEventListener('click', imagePopupClose);
 
