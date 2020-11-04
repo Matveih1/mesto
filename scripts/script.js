@@ -1,4 +1,4 @@
-let popupForm = document.querySelector('.popup.popup_profile');
+let popupForm = document.querySelector('.popup');
 
 let editButton = document.querySelector('.profile__edit-button');
 let closeButton = popupForm.querySelector('.popup__button-close');
@@ -15,9 +15,9 @@ let formProfile = popupForm.querySelector('.popup__container');
 // найдем кнопку для добавления новых элементов
 const addButton = document.querySelector('.profile__add-button');
 // найдем нужный popup
-const popupElement = document.querySelector('.popup.popup_element');
+const popupElement = document.querySelector('.element-popup');
 const formElement = popupElement.querySelector('form[name="form-elements"]');
-const closeButtonElement = popupElement.querySelector('.popup__button-close');
+const closeButtonElement = popupElement.querySelector('.element-popup__button-close');
 const titleElement = formElement.querySelector('input[name="title"]');
 const linkElement = formElement.querySelector('input[name="link"]');
 
@@ -124,7 +124,7 @@ function formSubmitHandler (evt) {
 
 // Работа с формой добавления элементов
 function addButtonClick () {
-  popupElement.classList.add('popup_open');
+  popupElement.classList.add('element-popup_open');
 
   // очистим форму
   linkElement.value = '';
@@ -132,7 +132,7 @@ function addButtonClick () {
 }
 
 function closeButtonElementClick () {
-  popupElement.classList.remove('popup_open');
+  popupElement.classList.remove('element-popup_open');
 }
 
 function formElementSubmit (evt) {
