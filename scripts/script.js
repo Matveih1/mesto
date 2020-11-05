@@ -1,15 +1,15 @@
-let popupForm = document.querySelector('.popup');
+const popupForm = document.querySelector('.popup');
 
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = popupForm.querySelector('.popup__button-close');
+const editButton = document.querySelector('.profile__edit-button');
+const closeButton = popupForm.querySelector('.popup__button-close');
 
-let infoName = document.querySelector('.profile__info-name');
-let nameInput = popupForm.querySelector('input[name="name"]');
-let infoDescription = document.querySelector('.profile__info-description');
-let descriptionInput = popupForm.querySelector('input[name="description"]');
+const infoName = document.querySelector('.profile__info-name');
+const nameInput = popupForm.querySelector('input[name="name"]');
+const infoDescription = document.querySelector('.profile__info-description');
+const descriptionInput = popupForm.querySelector('input[name="description"]');
 
 // найдем форму
-let formProfile = popupForm.querySelector('.popup__container');
+const formProfile = popupForm.querySelector('.popup__container');
 
 
 // найдем кнопку для добавления новых элементов
@@ -85,11 +85,11 @@ function addElement (img, title) {
 
   // откроем картинку
   newElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    imagePopup.querySelector('.image-popup__img').src = evt.target.src;
-    // найдем родителя
-    const elementTitle = evt.target.closest('.element').querySelector('.element__title').textContent;
-    imagePopup.querySelector('.image-popup__caption').textContent = elementTitle;
-    imagePopup.querySelector('.image-popup__img').alt = elementTitle;
+    const popupImage = imagePopup.querySelector('.image-popup__img');
+    
+    popupImage.src = img;
+    popupImage.alt = title;
+    imagePopup.querySelector('.image-popup__caption').textContent = title;
     
     imagePopup.classList.add('image-popup_open');
   });
@@ -99,11 +99,10 @@ function addElement (img, title) {
 }
 
 function editButtonClick() {
-
-  popupForm.classList.add('popup_open');
-
   nameInput.value = infoName.textContent;
   descriptionInput.value = infoDescription.textContent;
+
+  popupForm.classList.add('popup_open');
 }
 
 function closeButtonClick() {
@@ -124,11 +123,12 @@ function formSubmitHandler (evt) {
 
 // Работа с формой добавления элементов
 function addButtonClick () {
-  popupElement.classList.add('element-popup_open');
-
   // очистим форму
   linkElement.value = '';
   titleElement.value = '';
+  
+  // откроем форму
+  popupElement.classList.add('element-popup_open');
 }
 
 function closeButtonElementClick () {
