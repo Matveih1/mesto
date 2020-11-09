@@ -34,8 +34,8 @@
       <p class="footer__copy">&copy; 2020 Mesto Russia</p>
     </footer>
 
-    <section class="popup">
-      <form class="popup__container" name="form-profile">
+    <section class="popup popup_profile">
+      <form class="popup__container popup__container_profile" name="form-profile">
         <button class="popup__button-close" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
         <input class="popup__input" name="name" type="text" placeholder="Введите имя" required>
@@ -44,21 +44,21 @@
       </form>
     </section>
 
-    <section class="element-popup">
-      <form class="element-popup__container" name="form-elements">
-        <button class="element-popup__button-close" type="button"></button>
-        <h2 class="element-popup__title">Новое место</h2>
-        <input class="element-popup__input" name="title" type="text" placeholder="Название" required>
-        <input class="element-popup__input" name="link" type="text" placeholder="Ссылка на картинку" required>
-        <button class="element-popup__button-submit" type="submit">Создать</button> 
+    <section class="popup popup_element">
+      <form class="popup__container popup__container_element" name="form-elements">
+        <button class="popup__button-close popup__button-close_right" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <input class="popup__input popup__input_small" name="title" type="text" placeholder="Название" required>
+        <input class="popup__input popup__input_small" name="link" type="text" placeholder="Ссылка на картинку" required>
+        <button class="popup__button-submit popup__button-submit_element" type="submit">Создать</button> 
       </form>
     </section>
 
-    <section class="image-popup">
-      <div class="image-popup__container">
-        <button class="image-popup__button-close" type="button"></button>
-        <img class="image-popup__img" src="#" alt="">
-        <p class="image-popup__caption"></p>
+    <section class="popup popup_image">
+      <div class="popup__container-image">
+        <button class="popup__button-close popup__button-close_right" type="button"></button>
+        <img class="popup__img" src="#" alt="">
+        <p class="popup__caption"></p>
       </div>
     </section>
   </div>

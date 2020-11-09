@@ -1,0 +1,14 @@
+
+
+@media screen and (max-width: 767px) {
+  .popup__container_profile {
+    padding: 22px;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__container_profile {
+    width: calc(282px - 44px);
+  }
+}
