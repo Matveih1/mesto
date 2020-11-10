@@ -15,6 +15,8 @@ const linkElement = popupElement.querySelector('input[name="link"]');
 
 // image-popup
 const imagePopup = document.querySelector('.popup_image');
+const popupImage = imagePopup.querySelector('.popup__img');
+const popupCaption = imagePopup.querySelector('.popup__caption');
 
 const initialCards = [
   {
@@ -66,11 +68,9 @@ const getElement = (img, title) => {
 
   // откроем картинку
   newElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    const popupImage = imagePopup.querySelector('.popup__img');
-    
     popupImage.src = img;
     popupImage.alt = title;
-    imagePopup.querySelector('.popup__caption').textContent = title;
+    popupCaption.textContent = title;
     
     openPopup(imagePopup);
   });
@@ -87,8 +87,8 @@ function openPopup(popup) {
   popup.classList.add('popup_open');
 }
 
-function closePopup (evt) {
-  evt.target.closest('.popup').classList.remove('popup_open');
+function closePopup (popup) {
+  popup.classList.remove('popup_open');
 }  
 
 
@@ -100,7 +100,9 @@ document.querySelector('.profile__edit-button').addEventListener('click', functi
 
   openPopup(popupForm);
 });
-popupForm.querySelector('.popup__button-close').addEventListener('click', closePopup);
+popupForm.querySelector('.popup__button-close').addEventListener('click', function () {
+  closePopup(popupForm)
+});
 popupForm.querySelector('form[name="form-profile"]').addEventListener('submit', function (evt ) {
   evt.preventDefault();
 
@@ -109,7 +111,7 @@ popupForm.querySelector('form[name="form-profile"]').addEventListener('submit', 
   infoDescription.textContent = descriptionInput.value;
 
   //закроем форму
-  closePopup(evt);
+  closePopup(popupForm);
 }); 
 
 document.querySelector('.profile__add-button').addEventListener('click', function () {
@@ -121,14 +123,18 @@ document.querySelector('.profile__add-button').addEventListener('click', functio
   openPopup(popupElement);
 });
 
-popupElement.querySelector('.popup__button-close').addEventListener('click', closePopup);
+popupElement.querySelector('.popup__button-close').addEventListener('click', function () {
+  closePopup(popupElement)
+});
 popupElement.querySelector('form[name="form-elements"]').addEventListener('submit', function(evt) {
   evt.preventDefault();
 
   elements.prepend(getElement(linkElement.value, titleElement.value));
 
-  closePopup(evt);
+  closePopup(popupElement);
 });
 
-imagePopup.querySelector('.popup__button-close').addEventListener('click', closePopup);
+imagePopup.querySelector('.popup__button-close').addEventListener('click', function () {
+  closePopup(imagePopup)
+});
 
