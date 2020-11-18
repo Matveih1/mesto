@@ -58,25 +58,6 @@ const getElement = (img, title) => {
   newElement.querySelector('.element__image').alt = title;
   newElement.querySelector('.element__title').textContent = title;
 
-  // оживим like
-  newElement.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-
-  // добавим возможность удалять
-  newElement.querySelector('.element__delete').addEventListener('click', function (evt) {
-    evt.target.closest('.element').remove();
-  });
-
-  // откроем картинку
-  newElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    popupImage.src = img;
-    popupImage.alt = title;
-    popupCaption.textContent = title;
-    
-    openPopup(imagePopup);
-  });
-
   return newElement;
 }
 
@@ -85,17 +66,34 @@ initialCards.forEach((item) => {
   elements.append(getElement(item.link, item.name))
 });
 
+function pressEsc(evt) { 
+  console.log('я тут');
+  if (evt.key === 'Escape') { 
+    closePopup(document.querySelector('.popup_open')); 
+  } 
+}
+
+function overlayClick(evt) {
+  if (evt.target.classList.contains('popup_open')) {
+    closePopup(evt.target);
+  }
+}
+
 function openPopup(popup) {
   popup.classList.add('popup_open');
+  document.addEventListener('keyup', pressEsc);
+  document.addEventListener('mousedown', overlayClick);
 }
 
 function closePopup (popup) {
   popup.classList.remove('popup_open');
+  document.removeEventListener('keyup', pressEsc);
+  document.removeEventListener('mousedown', overlayClick);
 }  
 
 
 
-// добавим обработку событий
+
 document.querySelector('.profile__edit-button').addEventListener('click', function () {
   nameInput.value = infoName.textContent;
   descriptionInput.value = infoDescription.textContent;
@@ -117,11 +115,6 @@ formProfile.addEventListener('submit', function (evt ) {
   //закроем форму
   closePopup(popupForm);
 }); 
-popupForm.addEventListener('mousedown', function(evt) {
-  if (evt.target === popupForm) {
-    closePopup(popupForm);
-  }
-})
 
 document.querySelector('.profile__add-button').addEventListener('click', function () {
   // очистим форму
@@ -143,27 +136,22 @@ formElement.addEventListener('submit', function(evt) {
 
   closePopup(popupElement);
 });
-popupElement.addEventListener('mousedown', function(evt) {
-  if (evt.target === popupElement) {
-    closePopup(popupElement);
+elements.addEventListener('click', function(evt) {
+  if (evt.target.classList.contains('element__like')) {
+    evt.target.classList.toggle('element__like_active');
+  } else if (evt.target.classList.contains('element__delete')) {
+  evt.target.closest('.element').remove();
+  } else if (evt.target.classList.contains('element__image')) {
+    const title = evt.target.closest('.element').querySelector('.element__title').textContent; 
+    popupImage.src = evt.target.src;
+    popupImage.alt = title;
+    popupCaption.textContent = title;
+    
+    openPopup(imagePopup);
   }
 })
-
 
 imagePopup.querySelector('.popup__button-close').addEventListener('click', function () {
   closePopup(imagePopup)
 });
-imagePopup.addEventListener('mousedown', function(evt) {
-  if (evt.target === imagePopup) {
-    closePopup(imagePopup);
-  }
-})
-imagePopup.addEventListener('keydown', function(evt) {
-  console.log('я тут');
-  if (evt.key === "Esc") {
-    console.log('теперь тут');
-    closePopup(imagePopup);
-  }
-})
-
 
