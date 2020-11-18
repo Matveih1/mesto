@@ -2,14 +2,14 @@
 const infoName = document.querySelector('.profile__info-name');
 const infoDescription = document.querySelector('.profile__info-description');
 const popupForm = document.querySelector('.popup_profile');
+const formProfile = popupForm.querySelector('form[name="form-profile"]');
 const nameInput = popupForm.querySelector('input[name="name"]');
 const descriptionInput = popupForm.querySelector('input[name="description"]');
 
 //секция для добавления новых элементов
 const elements = document.querySelector('.elements');
-
-// найдем нужный popup
 const popupElement = document.querySelector('.popup_element');
+const formElement = popupElement.querySelector('form[name="form-elements"]');
 const titleElement = popupElement.querySelector('input[name="title"]');
 const linkElement = popupElement.querySelector('input[name="link"]');
 
@@ -17,6 +17,8 @@ const linkElement = popupElement.querySelector('input[name="link"]');
 const imagePopup = document.querySelector('.popup_image');
 const popupImage = imagePopup.querySelector('.popup__img');
 const popupCaption = imagePopup.querySelector('.popup__caption');
+
+
 
 const initialCards = [
   {
@@ -98,12 +100,14 @@ document.querySelector('.profile__edit-button').addEventListener('click', functi
   nameInput.value = infoName.textContent;
   descriptionInput.value = infoDescription.textContent;
 
+  validateAfterOpen(formProfile);
+
   openPopup(popupForm);
 });
 popupForm.querySelector('.popup__button-close').addEventListener('click', function () {
   closePopup(popupForm)
 });
-popupForm.querySelector('form[name="form-profile"]').addEventListener('submit', function (evt ) {
+formProfile.addEventListener('submit', function (evt ) {
   evt.preventDefault();
 
   // присвоем значение
@@ -113,28 +117,53 @@ popupForm.querySelector('form[name="form-profile"]').addEventListener('submit', 
   //закроем форму
   closePopup(popupForm);
 }); 
+popupForm.addEventListener('mousedown', function(evt) {
+  if (evt.target === popupForm) {
+    closePopup(popupForm);
+  }
+})
 
 document.querySelector('.profile__add-button').addEventListener('click', function () {
   // очистим форму
   linkElement.value = '';
   titleElement.value = '';
+
+  validateAfterOpen(formElement);
   
   // откроем форму
   openPopup(popupElement);
 });
-
 popupElement.querySelector('.popup__button-close').addEventListener('click', function () {
   closePopup(popupElement)
 });
-popupElement.querySelector('form[name="form-elements"]').addEventListener('submit', function(evt) {
+formElement.addEventListener('submit', function(evt) {
   evt.preventDefault();
 
   elements.prepend(getElement(linkElement.value, titleElement.value));
 
   closePopup(popupElement);
 });
+popupElement.addEventListener('mousedown', function(evt) {
+  if (evt.target === popupElement) {
+    closePopup(popupElement);
+  }
+})
+
 
 imagePopup.querySelector('.popup__button-close').addEventListener('click', function () {
   closePopup(imagePopup)
 });
+imagePopup.addEventListener('mousedown', function(evt) {
+  if (evt.target === imagePopup) {
+    closePopup(imagePopup);
+  }
+})
+imagePopup.addEventListener('keydown', function(evt) {
+  console.log('я тут');
+  if (evt.key === "Esc") {
+    console.log('теперь тут');
+    closePopup(imagePopup);
+  }
+})
+
 
