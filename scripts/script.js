@@ -53,10 +53,31 @@ const getElement = (img, title) => {
   // клонируем содержимое тега template
   const newElement = elementTemplate.cloneNode(true);
 
+  const elementImage = newElement.querySelector('.element__image');
+
   // наполняем содержимым
-  newElement.querySelector('.element__image').src = img;
-  newElement.querySelector('.element__image').alt = title;
+  elementImage.src = img;
+  elementImage.alt = title;
   newElement.querySelector('.element__title').textContent = title;
+
+  // оживим like
+  newElement.querySelector('.element__like').addEventListener('click', function (evt) {
+    evt.target.classList.toggle('element__like_active');
+  });
+
+  // добавим возможность удалять
+  newElement.querySelector('.element__delete').addEventListener('click', function (evt) {
+    evt.target.closest('.element').remove();
+  });
+
+  // откроем картинку
+  newElement.querySelector('.element__image').addEventListener('click', function (evt) {
+    popupImage.src = img;
+    popupImage.alt = title;
+    popupCaption.textContent = title;
+    
+    openPopup(imagePopup);
+  });
 
   return newElement;
 }
@@ -90,7 +111,6 @@ function closePopup (popup) {
   document.removeEventListener('keyup', pressEsc);
   document.removeEventListener('mousedown', overlayClick);
 }  
-
 
 
 
@@ -136,20 +156,6 @@ formElement.addEventListener('submit', function(evt) {
 
   closePopup(popupElement);
 });
-elements.addEventListener('click', function(evt) {
-  if (evt.target.classList.contains('element__like')) {
-    evt.target.classList.toggle('element__like_active');
-  } else if (evt.target.classList.contains('element__delete')) {
-  evt.target.closest('.element').remove();
-  } else if (evt.target.classList.contains('element__image')) {
-    const title = evt.target.closest('.element').querySelector('.element__title').textContent; 
-    popupImage.src = evt.target.src;
-    popupImage.alt = title;
-    popupCaption.textContent = title;
-    
-    openPopup(imagePopup);
-  }
-})
 
 imagePopup.querySelector('.popup__button-close').addEventListener('click', function () {
   closePopup(imagePopup)
