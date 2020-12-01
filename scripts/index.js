@@ -1,19 +1,39 @@
-// профиль
+import Card from './Сard.js';
+import FormValidator from './FormValidator.js';
+
+const configValidator = {
+    formSelector: '.popup__container',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button-submit',
+    inactiveButtonClass: 'popup__button-submit_inactive',
+    inputErrorClass: 'popup__input_error',
+    errorClass: 'popup__input-error_active'
+  }
+
+// профиль ------------
 const infoName = document.querySelector('.profile__info-name');
 const infoDescription = document.querySelector('.profile__info-description');
 const popupForm = document.querySelector('.popup_profile');
 const formProfile = popupForm.querySelector('form[name="form-profile"]');
+// привяжем валидацию
+const formProfileValidator = new FormValidator(configValidator, formProfile);
+formProfileValidator.enableValidation();
+
 const nameInput = popupForm.querySelector('input[name="name"]');
 const descriptionInput = popupForm.querySelector('input[name="description"]');
 
-//секция для добавления новых элементов
+//секция для добавления новых элементов -----------
 const elements = document.querySelector('.elements');
 const popupElement = document.querySelector('.popup_element');
 const formElement = popupElement.querySelector('form[name="form-elements"]');
+// привяжем валидацию
+const formElementValidator = new FormValidator(configValidator, formElement);
+formElementValidator.enableValidation();
+
 const titleElement = popupElement.querySelector('input[name="title"]');
 const linkElement = popupElement.querySelector('input[name="link"]');
 
-// image-popup
+// image-popup ------------
 const imagePopup = document.querySelector('.popup_image');
 const popupImage = imagePopup.querySelector('.popup__img');
 const popupCaption = imagePopup.querySelector('.popup__caption');
@@ -47,48 +67,22 @@ const initialCards = [
   }
 ]; 
 
-const getElement = (img, title) => {
-  // получим содержимое template для клонирования
-  const elementTemplate = document.querySelector('#element').content;
-  // клонируем содержимое тега template
-  const newElement = elementTemplate.cloneNode(true);
-
-  const elementImage = newElement.querySelector('.element__image');
-
-  // наполняем содержимым
-  elementImage.src = img;
-  elementImage.alt = title;
-  newElement.querySelector('.element__title').textContent = title;
-
-  // оживим like
-  newElement.querySelector('.element__like').addEventListener('click', function (evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-
-  // добавим возможность удалять
-  newElement.querySelector('.element__delete').addEventListener('click', function (evt) {
-    evt.target.closest('.element').remove();
-  });
-
-  // откроем картинку
-  newElement.querySelector('.element__image').addEventListener('click', function (evt) {
-    popupImage.src = img;
-    popupImage.alt = title;
-    popupCaption.textContent = title;
-    
-    openPopup(imagePopup);
-  });
-
-  return newElement;
+// откроем попап с картинкой
+function imageShow(img, title) {
+  popupImage.src = img;
+  popupImage.alt = title;
+  popupCaption.textContent = title;
+  
+  openPopup(imagePopup);
 }
 
-// добавим элементы из массива
+// добавим карточки из массива
 initialCards.forEach((item) => {
-  elements.append(getElement(item.link, item.name))
+  const card = new Card(item.link, item.name, '#element'); // передаём объект аргументом
+  elements.append(card.generateCard(imageShow));
 });
 
 function pressEsc(evt) { 
-  console.log('я тут');
   if (evt.key === 'Escape') { 
     closePopup(document.querySelector('.popup_open')); 
   } 
@@ -118,7 +112,7 @@ document.querySelector('.profile__edit-button').addEventListener('click', functi
   nameInput.value = infoName.textContent;
   descriptionInput.value = infoDescription.textContent;
 
-  validateAfterOpen(formProfile);
+  formProfileValidator.validateAfterOpen();
 
   openPopup(popupForm);
 });
@@ -141,7 +135,7 @@ document.querySelector('.profile__add-button').addEventListener('click', functio
   linkElement.value = '';
   titleElement.value = '';
 
-  validateAfterOpen(formElement);
+  formElementValidator.validateAfterOpen();
   
   // откроем форму
   openPopup(popupElement);
@@ -151,8 +145,9 @@ popupElement.querySelector('.popup__button-close').addEventListener('click', fun
 });
 formElement.addEventListener('submit', function(evt) {
   evt.preventDefault();
-
-  elements.prepend(getElement(linkElement.value, titleElement.value));
+  const card = new Card(linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
+  elements.prepend(card.generateCard());
+ // elements.prepend(getElement(linkElement.value, titleElement.value));
 
   closePopup(popupElement);
 });
