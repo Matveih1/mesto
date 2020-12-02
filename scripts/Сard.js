@@ -1,5 +1,6 @@
 export default class Card {
-  constructor(link, title, cardSelector ){
+  constructor(config, link, title, cardSelector ){
+    this._config = config;
     this._img = link;
     this._title = title;
     this._cardSelector = cardSelector;
@@ -18,16 +19,24 @@ export default class Card {
 
   _setEventListeners() {
     // оживим like
-    this._element.querySelector('.element__like').addEventListener('click', () => {
-      this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    const elementLike = this._element.querySelector(this._config.elementLikeSelector);
+    elementLike.addEventListener('click', () => {
+      elementLike.classList.toggle(this._config.likeActiveClass);
     });
     // добавим возможность удалять
-    this._element.querySelector('.element__delete').addEventListener('click', () => {
+    this._element.querySelector(this._config.elementDeleteSelector).addEventListener('click', () => {
       this._element.remove();
     });
     // добавим возможность смотреть 
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._imageShow(this._img, this._title);
+    this._element.querySelector(this._config.elementImageSelector).addEventListener('click', () => {
+      
+      const popupImage = this._config.imagePopup.querySelector(this._config.imageSelector);
+
+      popupImage.src = this._img;
+      popupImage.alt = this._title;
+      this._config.imagePopup.querySelector(this._config.captionSelector).textContent = this._title;
+
+      this._imageShow(this._config.imagePopup);
     });
   }
 
@@ -39,12 +48,12 @@ export default class Card {
     this._element = this._getTemplate();
     this._setEventListeners(); // добавим обработчики
   
-    const elementImage = this._element.querySelector('.element__image');
+    const elementImage = this._element.querySelector(this._config.elementImageSelector);
 
     // наполняем содержимым
     elementImage.src = this._img;
     elementImage.alt = this._title;
-    this._element.querySelector('.element__title').textContent = this._title;
+    this._element.querySelector(this._config.elementTitleSelector).textContent = this._title;
 
     // Вернём элемент наружу
     return this._element;

@@ -35,9 +35,17 @@ const linkElement = popupElement.querySelector('input[name="link"]');
 
 // image-popup ------------
 const imagePopup = document.querySelector('.popup_image');
-const popupImage = imagePopup.querySelector('.popup__img');
-const popupCaption = imagePopup.querySelector('.popup__caption');
+const configCard = {
+  elementImageSelector: '.element__image',
+  elementTitleSelector: '.element__title',
+  elementLikeSelector: '.element__like',
+  elementDeleteSelector: '.element__delete',
+  likeActiveClass: 'element__like_active',
 
+  imagePopup: imagePopup,  
+  imageSelector: '.popup__img',
+  captionSelector: '.popup__caption'
+}
 
 
 const initialCards = [
@@ -67,19 +75,10 @@ const initialCards = [
   }
 ]; 
 
-// откроем попап с картинкой
-function imageShow(img, title) {
-  popupImage.src = img;
-  popupImage.alt = title;
-  popupCaption.textContent = title;
-  
-  openPopup(imagePopup);
-}
-
 // добавим карточки из массива
 initialCards.forEach((item) => {
-  const card = new Card(item.link, item.name, '#element'); // передаём объект аргументом
-  elements.append(card.generateCard(imageShow));
+  const card = new Card(configCard, item.link, item.name, '#element'); // передаём объект аргументом
+  elements.append(card.generateCard(openPopup));
 });
 
 function pressEsc(evt) { 
@@ -132,8 +131,7 @@ formProfile.addEventListener('submit', function (evt ) {
 
 document.querySelector('.profile__add-button').addEventListener('click', function () {
   // очистим форму
-  linkElement.value = '';
-  titleElement.value = '';
+  formElement.reset();
 
   formElementValidator.validateAfterOpen();
   
@@ -145,9 +143,8 @@ popupElement.querySelector('.popup__button-close').addEventListener('click', fun
 });
 formElement.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  const card = new Card(linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
-  elements.prepend(card.generateCard());
- // elements.prepend(getElement(linkElement.value, titleElement.value));
+  const card = new Card(configCard, linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
+  elements.prepend(card.generateCard(openPopup));
 
   closePopup(popupElement);
 });
