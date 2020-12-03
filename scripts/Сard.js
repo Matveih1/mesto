@@ -1,6 +1,5 @@
 export default class Card {
-  constructor(config, link, title, cardSelector ){
-    this._config = config;
+  constructor(link, title, cardSelector ){
     this._img = link;
     this._title = title;
     this._cardSelector = cardSelector;
@@ -40,9 +39,11 @@ export default class Card {
     });
   }
 
-  generateCard(imageShow) {
+  generateCard(config, imageShow) {
     // сохраним ссылку на поднятие popup
     this._imageShow = imageShow;
+
+    this._config = config;
 
     // получим клонированный элемент для наполнения содержимым
     this._element = this._getTemplate();

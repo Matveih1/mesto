@@ -77,8 +77,8 @@ const initialCards = [
 
 // добавим карточки из массива
 initialCards.forEach((item) => {
-  const card = new Card(configCard, item.link, item.name, '#element'); // передаём объект аргументом
-  elements.append(card.generateCard(openPopup));
+  const card = new Card(item.link, item.name, '#element'); // передаём объект аргументом
+  elements.append(card.generateCard(configCard, openPopup));
 });
 
 function pressEsc(evt) { 
@@ -143,8 +143,8 @@ popupElement.querySelector('.popup__button-close').addEventListener('click', fun
 });
 formElement.addEventListener('submit', function(evt) {
   evt.preventDefault();
-  const card = new Card(configCard, linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
-  elements.prepend(card.generateCard(openPopup));
+  const card = new Card(linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
+  elements.prepend(card.generateCard(configCard, openPopup));
 
   closePopup(popupElement);
 });
