@@ -1,5 +1,10 @@
 import Card from './Сard.js';
 import FormValidator from './FormValidator.js';
+import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
+
 
 const configValidator = {
     formSelector: '.popup__container',
@@ -11,27 +16,21 @@ const configValidator = {
   }
 
 // профиль ------------
-const infoName = document.querySelector('.profile__info-name');
-const infoDescription = document.querySelector('.profile__info-description');
-const popupForm = document.querySelector('.popup_profile');
-const formProfile = popupForm.querySelector('form[name="form-profile"]');
+const userInfo = new UserInfo({
+  selectorName: '.profile__info-name',
+  selectorDescription: '.profile__info-description'
+});
+
+const formProfile = document.querySelector('form[name="form-profile"]');
 // привяжем валидацию
 const formProfileValidator = new FormValidator(configValidator, formProfile);
 formProfileValidator.enableValidation();
 
-const nameInput = popupForm.querySelector('input[name="name"]');
-const descriptionInput = popupForm.querySelector('input[name="description"]');
-
 //секция для добавления новых элементов -----------
-const elements = document.querySelector('.elements');
-const popupElement = document.querySelector('.popup_element');
-const formElement = popupElement.querySelector('form[name="form-elements"]');
+const formElement = document.querySelector('form[name="form-elements"]');
 // привяжем валидацию
 const formElementValidator = new FormValidator(configValidator, formElement);
 formElementValidator.enableValidation();
-
-const titleElement = popupElement.querySelector('input[name="title"]');
-const linkElement = popupElement.querySelector('input[name="link"]');
 
 // image-popup ------------
 const imagePopup = document.querySelector('.popup_image');
@@ -75,81 +74,54 @@ const initialCards = [
   }
 ]; 
 
-// добавим карточки из массива
-initialCards.forEach((item) => {
-  const card = new Card(item.link, item.name, '#element'); // передаём объект аргументом
-  elements.append(card.generateCard(configCard, openPopup));
-});
+const cardList = new Section({
+  items: initialCards,
+  renderer: (item) => {
+      const card = new Card(item.link, item.name, imageShow, '#element');
+      cardList.addItem(card.generateCard(configCard));
+    }
+  },
+  '.elements'
+);
 
-function pressEsc(evt) { 
-  if (evt.key === 'Escape') { 
-    closePopup(document.querySelector('.popup_open')); 
-  } 
-}
+// отрисовали карточки из массива
+cardList.render();
 
-function overlayClick(evt) {
-  if (evt.target.classList.contains('popup_open')) {
-    closePopup(evt.target);
+//popupImage 
+const popupImage = new PopupWithImage('.popup_image');
+function imageShow(img, src) {
+  popupImage.open(img, src);
+} 
+
+const elementPopup = new PopupWithForm({
+  popupSelector: '.popup_element', 
+  handleFormSubmit: (formData) => {
+    const card = new Card(formData.link, formData.title, imageShow, '#element'); // передаём объект аргументом
+    cardList.addItem(card.generateCard(configCard), false);
+
+    elementPopup.close();
   }
-}
+},'form[name="form-elements"]');
 
-function openPopup(popup) {
-  popup.classList.add('popup_open');
-  document.addEventListener('keyup', pressEsc);
-  document.addEventListener('mousedown', overlayClick);
-}
+const profilePopup = new PopupWithForm({
+  popupSelector: '.popup_profile',
+  handleFormSubmit: (formData) => {
+    userInfo.setUserInfo(formData.name, formData.description);
+    profilePopup.close();
+  }
+}, 'form[name="form-profile"]')
 
-function closePopup (popup) {
-  popup.classList.remove('popup_open');
-  document.removeEventListener('keyup', pressEsc);
-  document.removeEventListener('mousedown', overlayClick);
-}  
-
-
-
-document.querySelector('.profile__edit-button').addEventListener('click', function () {
-  nameInput.value = infoName.textContent;
-  descriptionInput.value = infoDescription.textContent;
-
+document.querySelector('.profile__edit-button').addEventListener('click', function () {  
+  const user = userInfo.getUserInfo();
+  profilePopup.setInputValues(user);
+  
   formProfileValidator.validateAfterOpen();
 
-  openPopup(popupForm);
+  profilePopup.open();
 });
-popupForm.querySelector('.popup__button-close').addEventListener('click', function () {
-  closePopup(popupForm)
-});
-formProfile.addEventListener('submit', function (evt ) {
-  evt.preventDefault();
-
-  // присвоем значение
-  infoName.textContent = nameInput.value;
-  infoDescription.textContent = descriptionInput.value;
-
-  //закроем форму
-  closePopup(popupForm);
-}); 
 
 document.querySelector('.profile__add-button').addEventListener('click', function () {
-  // очистим форму
-  formElement.reset();
 
   formElementValidator.validateAfterOpen();
-  
-  // откроем форму
-  openPopup(popupElement);
+  elementPopup.open();
 });
-popupElement.querySelector('.popup__button-close').addEventListener('click', function () {
-  closePopup(popupElement)
-});
-formElement.addEventListener('submit', function(evt) {
-  evt.preventDefault();
-  const card = new Card(linkElement.value, titleElement.value, '#element'); // передаём объект аргументом
-  elements.prepend(card.generateCard(configCard, openPopup));
-
-  closePopup(popupElement);
-});
-
-imagePopup.querySelector('.popup__button-close').addEventListener('click', function () {
-  closePopup(imagePopup)
-});
-

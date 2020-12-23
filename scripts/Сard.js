@@ -1,7 +1,8 @@
 export default class Card {
-  constructor(link, title, cardSelector ){
+  constructor( link, title, handleCardClick, cardSelector ){
     this._img = link;
     this._title = title;
+    this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
   }
 
@@ -28,21 +29,11 @@ export default class Card {
     });
     // добавим возможность смотреть 
     this._element.querySelector(this._config.elementImageSelector).addEventListener('click', () => {
-      
-      const popupImage = this._config.imagePopup.querySelector(this._config.imageSelector);
-
-      popupImage.src = this._img;
-      popupImage.alt = this._title;
-      this._config.imagePopup.querySelector(this._config.captionSelector).textContent = this._title;
-
-      this._imageShow(this._config.imagePopup);
+      this._handleCardClick(this._title, this._img);
     });
   }
 
-  generateCard(config, imageShow) {
-    // сохраним ссылку на поднятие popup
-    this._imageShow = imageShow;
-
+  generateCard(config) {
     this._config = config;
 
     // получим клонированный элемент для наполнения содержимым
