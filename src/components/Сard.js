@@ -1,9 +1,10 @@
 export default class Card {
-  constructor( link, title, handleCardClick, cardSelector ){
+  constructor( link, title, handleCardClick, cardSelector, config ){
     this._img = link;
     this._title = title;
     this._handleCardClick = handleCardClick;
     this._cardSelector = cardSelector;
+    this._config = config;
   }
 
   _getTemplate() {
@@ -33,9 +34,7 @@ export default class Card {
     });
   }
 
-  generateCard(config) {
-    this._config = config;
-
+  generateCard() {
     // получим клонированный элемент для наполнения содержимым
     this._element = this._getTemplate();
     this._setEventListeners(); // добавим обработчики

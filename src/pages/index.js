@@ -48,6 +48,10 @@ const configCard = {
   captionSelector: '.popup__caption'
 }
 
+function createCard(item) {
+  const card = new Card(item.link, item.name, imageShow, '#element', configCard);
+  return card.generateCard()
+} 
 
 const initialCards = [
   {
@@ -79,8 +83,7 @@ const initialCards = [
 const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
-      const card = new Card(item.link, item.name, imageShow, '#element');
-      cardList.addItem(card.generateCard(configCard));
+      cardList.addItem(createCard(item));
     }
   },
   '.elements'
@@ -98,8 +101,7 @@ function imageShow(img, src) {
 const elementPopup = new PopupWithForm({
   popupSelector: '.popup_element', 
   handleFormSubmit: (formData) => {
-    const card = new Card(formData.link, formData.title, imageShow, '#element'); // передаём объект аргументом
-    cardList.addItem(card.generateCard(configCard), false);
+    cardList.addItem(createCard({link: formData.link, name: formData.title}), false);
 
     elementPopup.close();
   }
