@@ -173,7 +173,7 @@ const avatarPopup = new PopupWithForm({
   submitWaitText: 'Сохранение...',
   submitActionText: 'Сохранить',
   handleFormSubmit: (formData) => {
-    api.patchAvatar(formData.link)
+    api.patchAvatar(formData.avatar)
       .then(res => {
         userInfo.setAvatar(res.avatar);
         avatarPopup.close();
