@@ -7,6 +7,8 @@
   width: 18px;
   height: 20px;
 
+  display: none;
+
   border: none;
   background-color: transparent;
   box-shadow: none;

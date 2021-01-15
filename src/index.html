@@ -16,7 +16,10 @@
     <main class="content">
 
       <section class="profile">
-        <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар">
+        <div class="profile__avatar-group">
+          <button class="profile__avatar-button" type="button"></button>
+          <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="аватар">
+        </div>  
         <div class="profile__info">
           <h1 class="profile__info-name">Жак-Ив Кусто</h1>
           <p class="profile__info-description">Исследователь океана</p>
@@ -71,6 +74,27 @@
         <p class="popup__caption"></p>
       </div>
     </section>
+
+    <section class="popup popup_image-delete">
+      <form class="popup__container popup__container_element" name="form-delete">
+        <button class="popup__button-close popup__button-close_right" type="button"></button>
+        <h2 class="popup__title">Вы увернеы?</h2>
+        <button class="popup__button-submit" type="submit">Да</button>
+      </form>
+    </section>
+
+    <section class="popup popup_avatar">
+      <form class="popup__container popup__container_element" name="form-avatar">
+        <button class="popup__button-close popup__button-close_right" type="button"></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+
+        <input class="popup__input popup__input_small" id="link-input" name="link" type="url" placeholder="Ссылка на аватар" required>
+        <span class="popup__input-error" id="link-input-error"></span>
+
+        <button class="popup__button-submit" type="submit">Сохранить</button> 
+      </form>
+    </section>
+
   </div>
 
   <template id="element">
@@ -78,7 +102,10 @@
       <img class="element__image" src="#" alt="#">
       <div class="element__info">
         <h2 class="element__title">Заголовок</h2>
-        <button class="element__like" type="button"></button>
+        <div class="element__like-group">
+          <button class="element__like" type="button"></button>
+          <h3 class="element__like-count">0</h3>
+        </div>  
       </div>
       <button class="element__delete" type="button"></button>
     </div>
