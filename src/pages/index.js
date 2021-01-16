@@ -59,6 +59,7 @@ const popupDelete = new PopupWithDelete({
   popupSelector: '.popup_image-delete',
   elementForm: 'form[name="form-delete"]' 
 });
+popupDelete.setEventListeners();
 
 // image-popup ------------
 const imagePopup = document.querySelector('.popup_image');
@@ -129,22 +130,21 @@ api.getInitialUser()
 
         const elementPopup = new PopupWithForm({
           popupSelector: '.popup_element', 
-          submitWaitText: 'Сохранение...',
-          submitActionText: 'Создать',
           handleFormSubmit: (formData) => {
+            elementPopup.setSubmitText('Сохранение...');
             api.addNewCard(formData)
               .then(result => {
-                console.log(result);
                 cardList.addItem(createCard(result), false);
-                console.log('www');
                 elementPopup.close();
               })
-              .catch(err => showError(err));
+              .catch(err => showError(err))
+              .finally(() => elementPopup.setSubmitText('Создать'))
           }
         },'form[name="form-elements"]');
+        elementPopup.setEventListeners();
     
         document.querySelector('.profile__add-button').addEventListener('click', function () {
-    
+          formElement.reset();
           formElementValidator.validateAfterOpen();
           elementPopup.open();
         });
@@ -156,31 +156,33 @@ api.getInitialUser()
 
 const profilePopup = new PopupWithForm({
   popupSelector: '.popup_profile',
-  submitWaitText: 'Сохранение...',
-  submitActionText: 'Сохранить',
   handleFormSubmit: (formData) => {
+    profilePopup.setSubmitText('Сохранение...');
     api.updateUserInfo(formData)
       .then(result => {
         userInfo.setUserInfo(result.name, result.about, result.avatar)
         profilePopup.close();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => profilePopup.setSubmitText('Сохранить'));
   }
 }, 'form[name="form-profile"]')
+profilePopup.setEventListeners();
 
 const avatarPopup = new PopupWithForm({
   popupSelector: '.popup_avatar',
-  submitWaitText: 'Сохранение...',
-  submitActionText: 'Сохранить',
   handleFormSubmit: (formData) => {
+    avatarPopup.setSubmitText('Сохранение...');
     api.patchAvatar(formData.avatar)
       .then(res => {
         userInfo.setAvatar(res.avatar);
         avatarPopup.close();
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => avatarPopup.setSubmitText('Сохранить'));
   }
 }, 'form[name="form-avatar"]');
+avatarPopup.setEventListeners();
 
 document.querySelector('.profile__edit-button').addEventListener('click', function () {  
   const user = userInfo.getUserInfo();

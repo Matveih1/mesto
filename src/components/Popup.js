@@ -18,24 +18,24 @@ export default class Popup {
     }
   }
 
-  setEventListeners() {
+  _setEventListeners() {
     document.addEventListener('keyup', this._handleEscClose);
     this._popup.addEventListener('mousedown', this._click);
   }
 
-  unsetEventListeners() {
+  _unsetEventListeners() {
     document.removeEventListener('keyup', this._handleEscClose);
     this._popup.removeEventListener('mousedown', this._click);
   }
 
   open() {
     this._popup.classList.add('popup_open');
-    this.setEventListeners();
+    this._setEventListeners();
   }
 
   close() {
     this._popup.classList.remove('popup_open');
-    this.unsetEventListeners();
+    this._unsetEventListeners();
   }
 
 }
