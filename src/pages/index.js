@@ -88,12 +88,14 @@ api.getInitialUser()
         },
         handleDeleteClick: () => {
           popupDelete.setSubmitHandler(() => {
+            popupDelete.setSubmitText('Удаление...')
             api.deleteCard(item._id)
               .then(() => {
                 card.deleteCard();
                 popupDelete.close();
               })
               .catch(err => console.log(err))
+              .finally(() => popupDelete.setSubmitText('Да'))
           })
           popupDelete.open();
         },
